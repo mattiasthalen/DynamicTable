@@ -41,6 +41,8 @@ define(["qlik", "jquery"],
             var initialId = layout.qInfo.qId;
             var maxFields = layout.maxFields;
             var dimensionField = layout.dimensionField;
+            var condShowCondition = "=GetSelectedCount([" + dimensionField + "]) >= 1 And GetSelectedCount([" + dimensionField + "]) <= " + maxFields;
+            var condShowMsg = "Please select between 1 and" + maxFields + "fields."
             var columns = [];
 
             for (let i = 0; i < maxFields; i++) {
@@ -54,7 +56,14 @@ define(["qlik", "jquery"],
                         ],
                         'qLabelExpression': '=' + baseFormula
                     },
-                    'qCalcCond': '=GetSelectedCount([' + dimensionField + ']) >= ' + n
+                    'qCalcCondition': {
+                        'qCond': {
+                            'qv': '=GetSelectedCount([' + dimensionField + ']) >= ' + n
+                        },
+                        'qMsg': {
+                            'qv': ''
+                        }
+                    }
                 };
 
                 columns.push(columnData);
@@ -68,7 +77,7 @@ define(["qlik", "jquery"],
                         "table",
                         columns,
                         {
-                            multiline: { wrapTextInCells: false },
+                            multiline: { wrapTextInCells: true },
                             components: [{
                                 key: "theme",
                                 content: { hoverEffect: true },
@@ -81,8 +90,6 @@ define(["qlik", "jquery"],
                             return finalObj.model.getProperties();
                         })
                         .then(function (properties) {
-                            console.log('finalObj properties', properties);
-
                             properties.qInfo.qId = initialId;
                             return initialObj.setProperties(properties);
                         })
