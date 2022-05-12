@@ -23,7 +23,7 @@ define(["qlik", "jquery"],
                     }] */
                 },
                 {
-                    label: "Generate table",
+                    label: "Generate dynamic table",
                     component: "button",
                     action: function (context) { generateTable(qlik, context); }
                 },

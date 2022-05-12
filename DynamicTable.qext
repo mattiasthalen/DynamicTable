@@ -1,6 +1,6 @@
 {
 	"name": "Dynamic Table",
-	"description": "This puts a standard table object in place with fields showing based on a filter",
+	"description": "This extension will generate a standard table object in place with fields showing based on a filter",
 	"type": "visualization",
 	"version": "1.0.0",
 	"icon": "table",
