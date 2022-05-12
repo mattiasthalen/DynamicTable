@@ -1,0 +1,15 @@
+{
+	"name": "Dynamic Table",
+	"description": "This puts a standard table object in place with fields showing based on a filter",
+	"type": "visualization",
+	"version": "1.0.0",
+	"icon": "table",
+	"author": "Mattias Thal=en",
+	"homepage": "",
+	"keywords": "qlik-sense, visualization",
+	"license": "",
+	"repository": "",
+	"dependencies": {
+		"qlik-sense": ">=3.0.x"
+	}
+}
