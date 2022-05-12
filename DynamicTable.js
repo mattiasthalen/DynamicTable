@@ -14,8 +14,13 @@ define(["qlik", "jquery"],
                 {
                     label: "Dimension Field",
                     type: "string",
+                    component: "dropdown",
                     defaultValue: "Dimension",
-                    ref: "dimensionField"
+                    ref: "dimensionField",
+                    options: [{
+                        value: "Dimension",
+                        label: "Dimension"
+                    }]
                 },
                 /* {
                     label: "Measure Field",
