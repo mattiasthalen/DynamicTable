@@ -14,13 +14,13 @@ define(["qlik", "jquery"],
                 {
                     label: "Dimension Field",
                     type: "string",
-                    component: "dropdown",
                     defaultValue: "Dimension",
                     ref: "dimensionField",
+                    /* component: "dropdown",
                     options: [{
                         value: "Dimension",
                         label: "Dimension"
-                    }]
+                    }] */
                 },
                 {
                     label: "Generate table",
