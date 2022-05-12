@@ -22,12 +22,6 @@ define(["qlik", "jquery"],
                         label: "Dimension"
                     }]
                 },
-                /* {
-                    label: "Measure Field",
-                    type: "string",
-                    defaultValue: "Measure",
-                    ref: "measureField"
-                }, */
                 {
                     label: "Generate table",
                     component: "button",
