@@ -50,19 +50,14 @@ define(["qlik", "jquery"],
                 var baseFormula = 'SubField(Concat([' + dimensionField + '], Chr(124)), Chr(124), ' + n + ')';
 
                 var columnData = {
-                    'qDef': {
-                        'qFieldDefs': [
+                    qDef: {
+                        qFieldDefs: [
                             '=$(=Chr(91) & ' + baseFormula + ' & Chr(93))'
                         ],
-                        'qLabelExpression': '=' + baseFormula
+                        qLabelExpression: '=' + baseFormula
                     },
-                    'qCalcCondition': {
-                        'qCond': {
-                            'qv': '=GetSelectedCount([' + dimensionField + ']) >= ' + n
-                        },
-                        'qMsg': {
-                            'qv': ''
-                        }
+                    qCalcCondition: {
+                        qCond: '=GetSelectedCount([' + dimensionField + ']) >= ' + n
                     }
                 };
 
