@@ -51,14 +51,10 @@ define(["qlik", "jquery"],
 
                 var columnData = {
                     qDef: {
-                        qFieldDefs: [
-                            "=$(=Chr(91) & " + baseFormula + " & Chr(93))"
-                        ],
+                        qFieldDefs: ["=$(=Chr(91) & " + baseFormula + " & Chr(93))"],
                         qLabelExpression: "=" + baseFormula
                     },
-                    qCalcCondition: {
-                        qCond: "=GetSelectedCount([" + dimensionField + "]) >= " + n
-                    }
+                    qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= " + n }
                 };
 
                 columns.push(columnData);
