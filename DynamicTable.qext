@@ -1,10 +1,10 @@
 {
 	"name": "Dynamic Table",
-	"description": "This extension will generate a standard table object in place with fields showing based on a filter",
+	"description": "This extension will generate a standard table object in place with fields showing based on a filter.\n\nCreated by Mattias Thalén",
 	"type": "visualization",
 	"version": "1.0.0",
 	"icon": "table",
-	"author": "Mattias Thal=en",
+	"author": "Mattias Thalén",
 	"homepage": "",
 	"keywords": "qlik-sense, visualization",
 	"license": "",

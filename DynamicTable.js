@@ -23,7 +23,7 @@ define(["qlik", "jquery"],
                     action: function (context) { generateTable(qlik, context); }
                 },
                 {
-                    label: "by Mattias Thalén",
+                    label: "Created by Mattias Thalén",
                     component: "text"
                 }
             ]
