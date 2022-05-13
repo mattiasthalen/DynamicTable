@@ -74,6 +74,7 @@ define(["qlik", "jquery"],
                         "table",
                         columns,
                         {
+                            title: "Dynamic Report",
                             multiline: { wrapTextInCells: true },
                             components: [{
                                 key: "theme",
