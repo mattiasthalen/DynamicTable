@@ -158,10 +158,14 @@ define(["qlik", "jquery"],
 
                 $element.html(
                     "<table height='100%'><tr><td style='text-align:center;'>"
-                    + "This is a placeholder for a dynamic table.<br><br>"
-                    + "First create a field in the data model that contains all the dimensions you want to be available to the dynamic table.<br>"
-                    + "Then select the name of the dimension field you just created, in the settings panel of this object.<br><br>"
-                    + "After configuring the settings this will become a standard Qlik Sense table."
+                    + "<p>This is a placeholder for a dynamic table.</p>"
+                    + "<br>"
+                    + "<p>First create a field in the data model that contains all the dimensions you want to be available to the dynamic table.<br>"
+                    + "Then select the name of the dimension field you just created, in the settings panel of this object.</p>"
+                    + "<br>"
+                    + "<p>You also have the option to supply a sorting field that will be used to sort the columns in the report</p>"
+                    + "<br>"
+                    + "<p>After configuring the settings this will become a standard Qlik Sense table.</p>"
                     + "<td></tr></table>");
 
                 return qlik.Promise.resolve();
