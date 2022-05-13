@@ -43,7 +43,13 @@ define(["qlik", "jquery"],
             var dimensionField = layout.dimensionField;
             var condShowCondition = "=GetSelectedCount([" + dimensionField + "]) >= 1 And GetSelectedCount([" + dimensionField + "]) <= " + maxFields;
             var condShowMsg = "Please select between 1 and" + maxFields + "fields."
-            var columns = [];
+            var columns = [{
+                qDef: {
+                    qLabel: "Row",
+                    qDef: "=RowNo()"
+                },
+                qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= 1" }
+            }];
 
             for (let i = 0; i < maxFields; i++) {
                 var n = i + 1;
@@ -110,6 +116,7 @@ define(["qlik", "jquery"],
             },
             definition: settings,
             paint: function ($element, layout) {
+                
                 $element.html(
                     "<table height='100%'><tr><td style='text-align:center;'>"
                     + "<p>This is a placeholder for a dynamic table.</p>"
