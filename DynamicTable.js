@@ -40,18 +40,28 @@ define(["qlik", "jquery"],
             var app = qlik.currApp(this);
             var initialId = layout.qInfo.qId;
             var maxFields = layout.maxFields;
+
             var dimensionField = layout.dimensionField;
 
+            if (/\s/.test(dimensionField)) {
+                var dimensionField = "[" + dimensionField + "]";
+            }
+
             var dimensionSortField = layout.dimensionSortField;
+            
+            if (/\s/.test(dimensionSortField)) {
+                var dimensionSortField = "[" + dimensionSortField + "]";
+            }
 
             var dimensionConcat = "Concat(" + dimensionField + ", Chr(124))";
 
-            if (dimensionSortField !== null) {
+            if (dimensionSortField != null) {
                 var dimensionConcat = "Concat(" + dimensionField + ", Chr(124), " + dimensionSortField + ")";
             }
 
             var condShowCondition = "=GetSelectedCount(" + dimensionField + ") >= 1 And GetSelectedCount(" + dimensionField + ") <= " + maxFields;
             var condShowMsg = "Please select between 1 and " + maxFields + " values in the " + dimensionField + " filter."
+
             var columns = [{
                 qDef: {
                     qLabel: "Row",
