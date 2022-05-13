@@ -42,12 +42,13 @@ define(["qlik", "jquery"],
             var maxFields = layout.maxFields;
             var dimensionField = layout.dimensionField;
             var condShowCondition = "=GetSelectedCount([" + dimensionField + "]) >= 1 And GetSelectedCount([" + dimensionField + "]) <= " + maxFields;
-            var condShowMsg = "Please select between 1 and" + maxFields + "fields."
+            var condShowMsg = "Please select between 1 and" + maxFields + " fields."
             var columns = [{
                 qDef: {
                     qLabel: "Row",
                     qDef: "=RowNo(TOTAL)",
-                    qAggrFunc: "Max"
+                    qAggrFunc: "Max"/*,
+                    qNumFormat: "# ##0" */
                 },
                 qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= 1" }
             }];
@@ -81,7 +82,13 @@ define(["qlik", "jquery"],
                                 key: "theme",
                                 content: { hoverEffect: true },
                                 scrollbar: { size: "medium" }
-                            }]
+                            }],
+                            qHyperCubeDef: {
+                                qCalcCondition: {
+                                    qCond: condShowCondition,
+                                    qMsg: condShowMsg
+                                }
+                            }
                         })
                         .then(function (obj) {
                             finalObj = obj;
@@ -121,7 +128,7 @@ define(["qlik", "jquery"],
             },
             definition: settings,
             paint: function ($element, layout) {
-                
+
                 $element.html(
                     "<table height='100%'><tr><td style='text-align:center;'>"
                     + "<p>This is a placeholder for a dynamic table.</p>"
