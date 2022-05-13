@@ -18,6 +18,11 @@ define(["qlik", "jquery"],
                     ref: "dimensionField",
                 },
                 {
+                    label: "Dimension Sort Field",
+                    type: "string",
+                    ref: "dimensionSortField",
+                },
+                {
                     label: "Generate dynamic table",
                     component: "button",
                     action: function (context) { generateTable(qlik, context); }
@@ -36,8 +41,17 @@ define(["qlik", "jquery"],
             var initialId = layout.qInfo.qId;
             var maxFields = layout.maxFields;
             var dimensionField = layout.dimensionField;
-            var condShowCondition = "=GetSelectedCount([" + dimensionField + "]) >= 1 And GetSelectedCount([" + dimensionField + "]) <= " + maxFields;
-            var condShowMsg = "Please select between 1 and " + maxFields + " values in the [" + dimensionField + "] filter."
+
+            var dimensionSortField = layout.dimensionSortField;
+
+            var dimensionConcat = "Concat(" + dimensionField + ", Chr(124))";
+
+            if (dimensionSortField !== null) {
+                var dimensionConcat = "Concat(" + dimensionField + ", Chr(124), " + dimensionSortField + ")";
+            }
+
+            var condShowCondition = "=GetSelectedCount(" + dimensionField + ") >= 1 And GetSelectedCount(" + dimensionField + ") <= " + maxFields;
+            var condShowMsg = "Please select between 1 and " + maxFields + " values in the " + dimensionField + " filter."
             var columns = [{
                 qDef: {
                     qLabel: "Row",
@@ -53,19 +67,19 @@ define(["qlik", "jquery"],
                     },
                     "numFormatFromTemplate": false
                 },
-                qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= 1" }
+                qCalcCondition: { qCond: "=GetSelectedCount(" + dimensionField + ") >= 1" }
             }];
 
             for (let i = 0; i < maxFields; i++) {
                 var n = i + 1;
-                var baseFormula = "SubField(Concat([" + dimensionField + "], Chr(124)), Chr(124), " + n + ")";
+                var baseFormula = "SubField(" + dimensionConcat + ", Chr(124), " + n + ")";
 
                 var columnData = {
                     qDef: {
                         qFieldDefs: ["=$(=Chr(91) & " + baseFormula + " & Chr(93))"],
                         qLabelExpression: "=" + baseFormula
                     },
-                    qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= " + n }
+                    qCalcCondition: { qCond: "=GetSelectedCount(" + dimensionField + ") >= " + n }
                 };
 
                 columns.push(columnData);
