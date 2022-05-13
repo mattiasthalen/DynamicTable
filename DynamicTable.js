@@ -42,7 +42,7 @@ define(["qlik", "jquery"],
             var maxFields = layout.maxFields;
             var dimensionField = layout.dimensionField;
             var condShowCondition = "=GetSelectedCount([" + dimensionField + "]) >= 1 And GetSelectedCount([" + dimensionField + "]) <= " + maxFields;
-            var condShowMsg = "Please select between 1 and" + maxFields + " fields."
+            var condShowMsg = "Please select between 1 and " + maxFields + " values in the [" + dimensionField + "] filter."
             var columns = [{
                 qDef: {
                     qLabel: "Row",
