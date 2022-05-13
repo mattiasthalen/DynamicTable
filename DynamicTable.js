@@ -16,11 +16,6 @@ define(["qlik", "jquery"],
                     type: "string",
                     defaultValue: "Dimension",
                     ref: "dimensionField",
-                    /* component: "dropdown",
-                    options: [{
-                        value: "Dimension",
-                        label: "Dimension"
-                    }] */
                 },
                 {
                     label: "Generate dynamic table",
@@ -47,8 +42,16 @@ define(["qlik", "jquery"],
                 qDef: {
                     qLabel: "Row",
                     qDef: "=RowNo(TOTAL)",
-                    qAggrFunc: "Max"/*,
-                    qNumFormat: "# ##0" */
+                    qAggrFunc: "Max",
+                    qNumFormat: {
+                        qType: "F",
+                        qnDec: 0,
+                        qUseThou: 0,
+                        qFmt: "# ##0",
+                        qDec: ".",
+                        qThou: " "
+                    },
+                    "numFormatFromTemplate": false
                 },
                 qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= 1" }
             }];
