@@ -46,7 +46,8 @@ define(["qlik", "jquery"],
             var columns = [{
                 qDef: {
                     qLabel: "Row",
-                    qDef: "=RowNo()"
+                    qDef: "=RowNo(TOTAL)",
+                    qAggrFunc: "Max"
                 },
                 qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionField + "]) >= 1" }
             }];
@@ -84,11 +85,13 @@ define(["qlik", "jquery"],
                         })
                         .then(function (obj) {
                             finalObj = obj;
+                            console.log("finalObj.model.getProperties():", finalObj.model.getProperties());
 
                             return finalObj.model.getProperties();
                         })
                         .then(function (properties) {
                             properties.qInfo.qId = initialId;
+
                             return initialObj.setProperties(properties);
                         })
                         .then(function (result) {
@@ -101,6 +104,7 @@ define(["qlik", "jquery"],
                             sheetObj.properties.cells.forEach(function (cell) {
                                 if (cell.name == initialId) cell.type = "table";
                             });
+
                             return sheetObj.setProperties(sheetObj.properties);
                         })
                         .catch(function (error) {
