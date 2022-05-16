@@ -45,7 +45,7 @@ define(["qlik", "jquery"],
             // Create qlik expression for concatenating and, if applicable, sort it
             var dimensionConcat = "Concat(" + dimensionField + ", Chr(124))";
 
-            if (dimensionSortField != null) {
+            if (dimensionSortField.length > 0) {
                 var dimensionConcat = "Concat(" + dimensionField + ", Chr(124), " + dimensionSortField + ")";
             }
 
