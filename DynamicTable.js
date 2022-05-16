@@ -14,7 +14,6 @@ define(["qlik", "jquery"],
                 {
                     label: "Dimension Field",
                     type: "string",
-                    defaultValue: "Dimension",
                     ref: "dimensionField",
                 },
                 {
@@ -40,19 +39,10 @@ define(["qlik", "jquery"],
             var app = qlik.currApp(this);
             var initialId = layout.qInfo.qId;
             var maxFields = layout.maxFields;
-
             var dimensionField = layout.dimensionField;
-
-            if (/\s/.test(dimensionField)) {
-                var dimensionField = "[" + dimensionField + "]";
-            }
-
             var dimensionSortField = layout.dimensionSortField;
-            
-            if (/\s/.test(dimensionSortField)) {
-                var dimensionSortField = "[" + dimensionSortField + "]";
-            }
 
+            // Create qlik expression for concatenating and, if applicable, sort it
             var dimensionConcat = "Concat(" + dimensionField + ", Chr(124))";
 
             if (dimensionSortField != null) {
@@ -62,6 +52,7 @@ define(["qlik", "jquery"],
             var condShowCondition = "=GetSelectedCount(" + dimensionField + ") >= 1 And GetSelectedCount(" + dimensionField + ") <= " + maxFields;
             var condShowMsg = "Please select between 1 and " + maxFields + " values in the " + dimensionField + " filter."
 
+            // Set initial column, row numbering
             var columns = [{
                 qDef: {
                     qLabel: "Row",
@@ -80,6 +71,7 @@ define(["qlik", "jquery"],
                 qCalcCondition: { qCond: "=GetSelectedCount(" + dimensionField + ") >= 1" }
             }];
 
+            // Generate all columns as specifed by Max Fields
             for (let i = 0; i < maxFields; i++) {
                 var n = i + 1;
                 var baseFormula = "SubField(" + dimensionConcat + ", Chr(124), " + n + ")";
@@ -95,6 +87,7 @@ define(["qlik", "jquery"],
                 columns.push(columnData);
             }
 
+            // Generate new qlik object and replace the placeholder
             app.model.enigmaModel.getObject(initialId)
                 .then(function (obj) {
                     initialObj = obj;
