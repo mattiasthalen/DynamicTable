@@ -43,10 +43,10 @@ define(["qlik", "jquery"],
             var dimensionSortField = layout.dimensionSortField;
 
             // Create qlik expression for concatenating and, if applicable, sort it
-            var dimensionConcat = "Concat(" + dimensionField + ", Chr(124))";
+            var dimensionConcat = "Concat(Distinct " + dimensionField + ", Chr(124))";
 
             if (dimensionSortField.length > 0) {
-                var dimensionConcat = "Concat(" + dimensionField + ", Chr(124), " + dimensionSortField + ")";
+                var dimensionConcat = "Concat(Distinct " + dimensionField + ", Chr(124), " + dimensionSortField + ")";
             }
 
             var condShowCondition = "=GetSelectedCount(" + dimensionField + ") >= 1 And GetSelectedCount(" + dimensionField + ") <= " + maxFields;
