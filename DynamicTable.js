@@ -33,13 +33,32 @@ define(["qlik", "jquery"],
             ]
         };
 
-        // Tabe generator
+        // Table generator
         function generateTable(qlik, layout) {
 
             var app = qlik.currApp(this);
             var initialId = layout.qInfo.qId;
+
+            // Set and check max fields
             var maxFields = layout.maxFields;
+
+            if (maxFields.length == 0 || maxFields <= 0) {
+                var errorMsg = "Max Fields is not valid!";
+
+                alert(errorMsg);
+                throw errorMsg;
+            }
+
+            // Set and check dimension field
             var dimensionField = layout.dimensionField;
+
+            if (dimensionField.length == 0) {
+                var errorMsg = "Dimension Field is empty!";
+
+                alert(errorMsg);
+                throw errorMsg;
+            }
+
             var dimensionSortField = layout.dimensionSortField;
 
             // Create qlik expression for concatenating and, if applicable, sort it
