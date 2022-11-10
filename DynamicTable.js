@@ -185,16 +185,8 @@ define(["qlik", "jquery"],
 					qDef: {
 						qLabelExpression: measureLabelFormula,
 						qDef: measureExpressionFormula,
-						qAggrFunc: "Max",
-						qNumFormat: {
-							qType: "F",
-							qnDec: 0,
-							qUseThou: 0,
-							qFmt: "# ##0",
-							qDec: ".",
-							qThou: " "
-						},
-						"numFormatFromTemplate": false
+						qAggrFunc: "None",
+						"numFormatFromTemplate": true
 					},
 					qCalcCondition: { qCond: "=GetSelectedCount(" + measureNameField + ") >= " + n }
 				};
