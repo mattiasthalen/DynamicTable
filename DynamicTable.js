@@ -91,10 +91,10 @@ define(["qlik", "jquery"],
             var dimensionSortField = layout.dimensionSortField;
 
             // Create qlik expression for concatenating and, if applicable, sort it
-            var dimensionConcat = "Concat(Distinct " + dimensionNameField + ", Chr(124))";
+            var dimensionConcat = "Concat(Distinct [" + dimensionNameField + "], Chr(124))";
 
             if (dimensionSortField.length > 0) {
-                var dimensionConcat = "Concat(Distinct " + dimensionNameField + ", Chr(124), " + dimensionSortField + ")";
+                var dimensionConcat = "Concat(Distinct [" + dimensionNameField + "], Chr(124), [" + dimensionSortField + "])";
             }
 
             // Set initial column, row numbering
@@ -113,7 +113,7 @@ define(["qlik", "jquery"],
                     },
                     "numFormatFromTemplate": false
                 },
-                qCalcCondition: { qCond: "=GetSelectedCount(" + dimensionNameField + ") >= 1" }
+                qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionNameField + "]) >= 1" }
             }];
 
             // Generate all dimension columns as specifed by Max Dimensions
@@ -126,7 +126,7 @@ define(["qlik", "jquery"],
                         qFieldDefs: ["=$(=Chr(91) & " + dimensionBaseFormula + " & Chr(93))"],
                         qLabelExpression: "=" + dimensionBaseFormula
                     },
-                    qCalcCondition: { qCond: "=GetSelectedCount(" + dimensionNameField + ") >= " + n }
+                    qCalcCondition: { qCond: "=GetSelectedCount([" + dimensionNameField + "]) >= " + n }
                 };
 
                 columns.push(dimensionData);
@@ -167,19 +167,19 @@ define(["qlik", "jquery"],
             var measureSortField = layout.measureSortField;
 
             // Create qlik expression for concatenating and, if applicable, sort it
-            var measureNameConcat = "Concat(Distinct " + measureNameField + ", Chr(124))";
-            var measureExpressionConcat = "Concat(Distinct " + measureExpressionField + ", Chr(124))";
+            var measureNameConcat = "Concat(Distinct [" + measureNameField + "], Chr(124))";
+            var measureExpressionConcat = "Concat(Distinct [" + measureExpressionField + "], Chr(124))";
 
             if (measureSortField.length > 0) {
-                var measureNameConcat = "Concat(Distinct " + measureNameField + ", Chr(124), " + measureSortField + ")";
-                var measureExpressionConcat = "Concat(Distinct " + measureExpressionField + ", Chr(124), " + measureSortField + ")";
+                var measureNameConcat = "Concat(Distinct [" + measureNameField + "], Chr(124), [" + measureSortField + "])";
+                var measureExpressionConcat = "Concat(Distinct [" + measureExpressionField + "], Chr(124), [" + measureSortField + "])";
             }
 
             // Generate all measure columns as specifed by Max Measures
             for (let i = 0; i < maxMeasures; i++) {
                 var n = i + 1;
                 var measureLabelFormula = "=SubField(" + measureNameConcat + ", Chr(124), " + n + ")";
-                var measureExpressionFormula = "=$($(=SubField(" + measureExpressionConcat + ", Chr(124), " + n + ")))";
+                var measureExpressionFormula = "=$(=SubField(" + measureExpressionConcat + ", Chr(124), " + n + "))";
 
                 var measureData = {
 					qDef: {
@@ -188,18 +188,18 @@ define(["qlik", "jquery"],
 						qAggrFunc: "None",
 						"numFormatFromTemplate": true
 					},
-					qCalcCondition: { qCond: "=GetSelectedCount(" + measureNameField + ") >= " + n }
+					qCalcCondition: { qCond: "=GetSelectedCount([" + measureNameField + "]) >= " + n }
 				};
 
                 columns.push(measureData);
             }
 			
-			var dimensionShowCondition = "GetSelectedCount(" + dimensionNameField + ") >= 1 And GetSelectedCount(" + dimensionNameField + ") <= " + maxDimensions;
-			var measureShowCondition = "GetSelectedCount(" + measureNameField + ") >= 1 And GetSelectedCount(" + measureNameField + ") <= " + maxMeasures;
+			var dimensionShowCondition = "GetSelectedCount([" + dimensionNameField + "]) >= 1 And GetSelectedCount([" + dimensionNameField + "]) <= " + maxDimensions;
+			var measureShowCondition = "GetSelectedCount([" + measureNameField + "]) >= 1 And GetSelectedCount(]" + measureNameField + "]) <= " + maxMeasures;
             var condShowCondition = "=" + dimensionShowCondition + " And " + measureShowCondition;
 			
-            var dimensionShowMsg = "Please select between 1 and " + maxDimensions + " values in the " + dimensionNameField + " filter.";
-            var measureShowMsg = "Please select between 1 and " + maxMeasures + " values in the " + measureNameField + " filter.";
+            var dimensionShowMsg = "Please select between 1 and " + maxDimensions + " values in the [" + dimensionNameField + "] filter.";
+            var measureShowMsg = "Please select between 1 and " + maxMeasures + " values in the [" + measureNameField + "] filter.";
 			
             var condShowMsg = "=If(Not(" + dimensionShowCondition + "), '" + dimensionShowMsg + "') & If(Not(" + dimensionShowCondition + " And " + measureShowCondition + "), '\n') & If(Not(" + measureShowCondition + "), '" + measureShowMsg + "')";
 
@@ -270,7 +270,7 @@ define(["qlik", "jquery"],
                     + "<p>This is a placeholder for a dynamic table.</p>"
                     + "<br>"
                     + "<p>First create a table in the data model that contains a field with all the dimensions you want to be available to the dynamic table.<br>"
-                    + "<p>Do the same for measures, create a table with name, but also add a field containing the variable name of the expression.<br>"
+                    + "<p>Do the same for measures, create a table with name, but also add a field containing the measure expression.<br>"
                     + "Then select the name of the dimension & measure fields you just created, in the settings panel of this object.</p>"
                     + "<br>"
                     + "<p>You also have the option to supply sorting fields that will be used to sort the columns in the report</p>"

@@ -2,7 +2,7 @@
 	"name": "Dynamic Table",
 	"description": "This extension will generate a standard table object in place with fields showing based on a filter.\n\nCreated by Mattias Thalén",
 	"type": "visualization",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"icon": "table",
 	"author": "Mattias Thalén",
 	"homepage": "",
